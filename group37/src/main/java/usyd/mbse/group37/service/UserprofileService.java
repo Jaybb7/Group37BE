@@ -254,4 +254,24 @@ public class UserprofileService {
             throw new UserNotFoundException("User not found");
         }
     }
+
+    public void updateUserProfile(Long userId, UserProfileModel userProfileModel){
+        Optional<UserProfileModel> userProfileOptional = userProfileRepository.findByUserProfileId(userId);
+        if (userProfileOptional.isPresent()) {
+            UserProfileModel existingUserProfile = userProfileOptional.get();
+            existingUserProfile.setTwitterLink(userProfileModel.getTwitterLink());
+            existingUserProfile.setInstagramLink(userProfileModel.getInstagramLink());
+            existingUserProfile.setLinkedInLink(userProfileModel.getLinkedInLink());
+            existingUserProfile.setCurrentPurpose(userProfileModel.getCurrentPurpose());
+            existingUserProfile.setAddress(userProfileModel.getAddress());
+            existingUserProfile.setLocation(userProfileModel.getLocation());
+            existingUserProfile.setBirthDate(userProfileModel.getBirthDate());
+            existingUserProfile.setBio(userProfileModel.getBio());
+            existingUserProfile.setStatusPhoto(userProfileModel.getStatusPhoto());
+            existingUserProfile.setProfilePhoto(userProfileModel.getProfilePhoto());
+            userProfileRepository.save(existingUserProfile);
+        } else {
+            throw new UserNotFoundException("User not found");
+        }
+    }
 }
