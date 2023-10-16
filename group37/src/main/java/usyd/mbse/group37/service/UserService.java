@@ -1,11 +1,10 @@
 package usyd.mbse.group37.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import usyd.mbse.group37.model.UserModel;
 import usyd.mbse.group37.repository.UserRepository;
 
-@Slf4j
+
 @Service
 public class UserService {
 
