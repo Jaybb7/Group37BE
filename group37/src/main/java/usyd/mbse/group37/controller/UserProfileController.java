@@ -22,7 +22,7 @@ public class UserProfileController {
     @Autowired
     private UserprofileService userprofileService;
 
-    @PostMapping("/{userId}/uploadProfilePhoto")
+    @PostMapping("/uploadProfilePhoto")
     public String uploadProfilePhoto(@RequestParam("file") MultipartFile file, @PathVariable("userId") Long userId) throws IOException {
         try {
             userprofileService.setProfilePhoto(userId, file.getBytes());
@@ -32,7 +32,7 @@ public class UserProfileController {
         }
     }
 
-    @PostMapping("/{userId}/uploadStatusPhoto")
+    @PostMapping("/uploadStatusPhoto")
     public String uploadStatusPhoto(@RequestParam("file") MultipartFile file, @PathVariable("userId") Long userId) throws IOException {
         try {
             userprofileService.setStatusPhoto(userId, file.getBytes());
