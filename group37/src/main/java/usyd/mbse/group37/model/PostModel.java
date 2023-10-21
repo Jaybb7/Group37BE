@@ -35,6 +35,6 @@ public class PostModel {
     private String postRequirements;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "user_email", referencedColumnName = "email_address")
     private UserModel user;
 }

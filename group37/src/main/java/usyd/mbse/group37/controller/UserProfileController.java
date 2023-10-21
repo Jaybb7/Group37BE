@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import usyd.mbse.group37.exception.UserNotFoundException;
@@ -52,12 +51,17 @@ public class UserProfileController {
         try {
             Long userId = Long.parseLong(userIdStr);
             UserProfileModel userProfile = userprofileService.getUserProfile(userId);
-            //model.addAttribute("userProfile", userProfile);
-            return new ResponseEntity<>(Map.of("data", "Something Went Wrong, Please Try Again in few Minutes"), HttpStatus.OK);
-
+            if (userProfile != null) {
+                return new ResponseEntity<>(Map.of("data", userProfile), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(Map.of("error", "User profile not found"), HttpStatus.NOT_FOUND);
+            }
         } catch (NumberFormatException e) {
-            return new ResponseEntity<>(Map.of("data", "Something Went Wrong, Please Try Again in few Minutes"), HttpStatus.OK);
-
+            return new ResponseEntity<>(Map.of("error", "Invalid user ID format"), HttpStatus.BAD_REQUEST);
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>(Map.of("error", "User not found"), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("error", "Something went wrong, please try again in a few minutes"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
