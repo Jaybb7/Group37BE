@@ -6,7 +6,9 @@ import org.checkerframework.checker.units.qual.C;
 
 @Data
 @Entity
-@Table(name = "Post")
+@Table(name = "Post", indexes = {
+        @Index(name = "index_user_email", columnList = "user_email")
+})
 public class PostModel {
     @Id
     @Column(name = "postId")
