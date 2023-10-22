@@ -28,4 +28,16 @@ public class OpenAIController {
         return new ResponseEntity<>(Map.of("data", openAIService.generateQuestionsForPurpose(purpose)), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/generateDocument")
+    public ResponseEntity<?> generateDocumentSample(@RequestParam String information){
+        return new ResponseEntity<>(Map.of("data", openAIService.generateDocumentSample(information)), HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/mockInterview")
+    public ResponseEntity<?> mockInterview(@RequestParam String question){
+        return new ResponseEntity<>(Map.of("data", openAIService.mockInterview(question)), HttpStatus.OK);
+    }
+
 }
