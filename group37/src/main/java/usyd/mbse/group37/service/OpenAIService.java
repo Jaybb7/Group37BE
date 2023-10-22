@@ -52,8 +52,16 @@ public class OpenAIService {
                 +
                 "that prompt user with a scenario  to assess the "+ purpose +" personality of the person. "
                 +
-                "The response will be purely textual. . No explanation is needed.";;
+                "The response will be purely textual. . No explanation is needed.";
         return chatGPT(input).split("\\\\n");
     }
 
+    public Object generateDocumentSample(String information) {
+        String input = "create a resume template for me inside the tag <TEMPLATE> with my information as " + information;
+        return chatGPT(input).split("\\\\n");
+    }
+
+    public Object mockInterview(String question) {
+        return chatGPT(question).split("\\\\n");
+    }
 }

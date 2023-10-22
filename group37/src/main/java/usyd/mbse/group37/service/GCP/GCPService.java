@@ -21,7 +21,7 @@ public class GCPService {
             "\"encodingType\":\"%s\"}";
 
 
-    public Object requestGCP(String payload) throws Exception {
+    public GCPResponse requestGCP(String payload) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         String requestBody = String.format(
                 GCP_REQUEST_JSON_BODY, payload, ENCODING_TYPE);
@@ -34,7 +34,7 @@ public class GCPService {
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new Exception("Unable to request external api: GCP sentiment analysis");
         }
-        return response.getBody();
+        return (GCPResponse) response.getBody();
     }
 
 }

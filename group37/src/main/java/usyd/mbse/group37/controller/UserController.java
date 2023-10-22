@@ -37,10 +37,10 @@ public class UserController {
         return purposeService.findPurposeRecords(purpose,userId);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/createPurpose")
-    public Optional<PurposeModel> createPurpose(@RequestParam String purpose, @RequestParam Long userId){
-        return purposeService.createAPurpose(purpose,userId);
-    }
+//    @CrossOrigin(origins = "http://localhost:4200")
+//    @GetMapping("/createPurpose")
+//    public Optional<PurposeModel> createPurpose(@RequestParam String purpose, @RequestParam String userId){
+//        return purposeService.createAPurpose(purpose,userId);
+//    }
 
 }

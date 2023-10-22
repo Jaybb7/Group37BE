@@ -22,14 +22,18 @@ public class PurposeService {
         this.userRepository = userRepository;
     }
 
-    public Optional<PurposeModel> createAPurpose( String purpose, Long userId) {
-        Optional<UserModel> user =  userRepository.findByUserId(userId);
+    public void createAPurpose( String purpose, String userId, double purposeScore) {
+        UserModel user =  userRepository.findByUserId(userId);
         PurposeModel purposeModel = new PurposeModel();
         purposeModel.setPurpose(purpose);
-        return Optional.of(purposeRepository.save(purposeModel));
+        purposeModel.setPurposeScore(0);
+        purposeModel.setUserModel(user);
+        purposeRepository.save(purposeModel);
+//        return Optional.of(purposeRepository.save(purposeModel));
     }
 
     public Optional<PurposeModel> findPurposeRecords(String purpose, Long userId) {
         return purposeRepository.findByPurposeAndUserID(purpose, userId);
     }
+
 }
