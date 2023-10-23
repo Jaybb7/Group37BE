@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "User")
+@Table(name = "User", indexes = {
+        @Index(name = "index_email_address", columnList = "email_address")
+})
 @NoArgsConstructor
 public class UserModel {
 
