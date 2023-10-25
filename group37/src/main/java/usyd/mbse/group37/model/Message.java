@@ -21,10 +21,10 @@ public class Message {
     private Long messageId;
 
     @Column(name = "from_user", nullable = false)
-    private Long fromUser;
+    private String fromUser;
 
     @Column(name = "to_user", nullable = false)
-    private Long toUser;
+    private String toUser;
 
     @Column(name = "message_content", nullable = false)
     private String messageContent;
@@ -32,7 +32,7 @@ public class Message {
     @Column(name = "message_timestamp", nullable = false)
     private String messageTimestamp;
 
-    public Message(Long fromUser, Long toUser, String messageContent) {
+    public Message(String fromUser, String toUser, String messageContent) {
         this.fromUser = fromUser;
         this.toUser = toUser;
         this.messageContent = messageContent;

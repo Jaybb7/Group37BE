@@ -7,5 +7,5 @@ import usyd.mbse.group37.model.PurposeModel;
 import java.util.List;
 
 public interface MessageRepository extends CrudRepository<Message, Long> {
-    List<Message> findByToUser(Long userId);
+    List<Message> findByToUser(String userId);
 }

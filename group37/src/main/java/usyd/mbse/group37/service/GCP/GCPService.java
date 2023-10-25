@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 @Service
 public class GCPService {
 
-    private static final String API_KEY = "AIzaSyDKEU8OcpQxrU6e6SlC87P0PY1TP3zGdjY";
+    private static final String API_KEY = System.getenv("GCP_API_KEY");
     private static final String API_ENDPOINT =
             "https://language.googleapis.com/v2/documents:analyzeSentiment" + "?key=" + API_KEY;
     private static final String ENCODING_TYPE = "UTF8";
