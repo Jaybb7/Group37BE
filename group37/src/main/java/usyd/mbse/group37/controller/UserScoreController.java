@@ -13,7 +13,7 @@ public class UserScoreController {
     @Autowired
     private UserScoreService userScoreService;
 
-    // 第一步: 生成问题
+    //
     @GetMapping("/generate-questions")
     public ResponseEntity<String[]> generateQuestions(@RequestParam Long userScoreId) {
         try {
@@ -24,7 +24,7 @@ public class UserScoreController {
         }
     }
 
-    // 第二步: 用户回答问题后计算分数
+    //
     @PostMapping("/calculate-score")
     public ResponseEntity<Void> calculateScore(@RequestBody String userResponse) {
         try {
