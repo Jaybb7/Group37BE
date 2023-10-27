@@ -41,21 +41,15 @@ public class UserScoreService {
     }
     public void calculateScoreUsingGCP(String userResponse) {
         try {
-            //String[] questions = openAIService.generateQuestionsForPurpose(purpose);
-            try (LanguageServiceClient languageService = LanguageServiceClient.create()) {
-                float sentimentScore = gcpService.analyzeSentiment(userResponse);
-                // Further process the score (if necessary)
-                // can consider combining sentiment scores with other factors, such as the user's work experience, educational background, etc.
-                float profileScore = processScore(sentimentScore);
-                UserScoreModel userScore = new UserScoreModel();
-                userScore.setScore(Float.toString(profileScore));
-                userScoreRepository.save(userScore);
-
-            } catch (Exception e) {
-                log.error("Error during sentiment analysis.", e);
-            }
+            float sentimentScore = gcpService.analyzeSentiment(userResponse);
+            // Further process the score (if necessary)
+            // can consider combining sentiment scores with other factors, such as the user's work experience, educational background, etc.
+            float profileScore = processScore(sentimentScore);
+            UserScoreModel userScore = new UserScoreModel();
+            userScore.setScore(Float.toString(profileScore));
+            userScoreRepository.save(userScore);
         } catch (Exception e) {
-            log.error("Error generating questions using OpenAI.", e);
+            log.error("Error during sentiment analysis.", e);
         }
     }
 
