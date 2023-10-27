@@ -14,10 +14,10 @@ public class UserScoreController {
     private UserScoreService userScoreService;
 
     //
-    @GetMapping("/generate-questions")
-    public ResponseEntity<String[]> generateQuestions(@RequestParam Long userScoreId) {
+    @GetMapping("/generate-questions/{userId}")
+    public ResponseEntity<String[]> generateQuestions(@PathVariable Long userId) {
         try {
-            String[] questions = userScoreService.generatePurposeBasedQuestionFromAI(userScoreId);
+            String[] questions = userScoreService.generatePurposeBasedQuestionFromAI(userId);
             return ResponseEntity.ok(questions);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

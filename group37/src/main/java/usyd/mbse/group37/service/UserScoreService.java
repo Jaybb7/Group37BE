@@ -24,13 +24,9 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class UserScoreService {
-    @Autowired
     private final UserScoreRepository userScoreRepository;
-    @Autowired
     private final PurposeRepository purposeRepository;
-    @Autowired
     private final OpenAIService openAIService;
-    @Autowired
     private final GCPService gcpService;
 
     public UserScoreService(UserScoreRepository userScoreRepository, PurposeRepository purposeRepository, OpenAIService openAIService, GCPService gcpService) {
@@ -58,9 +54,7 @@ public class UserScoreService {
         return sentimentScore;
     }
 
-    public String[] generatePurposeBasedQuestionFromAI(Long userScoreId) {
-        long userId = this.getUserByUserScoreId(userScoreId).getUserId();
-
+    public String[] generatePurposeBasedQuestionFromAI(Long userId) {
         try {
             List<PurposeModel> purposes = purposeRepository.findAllByUserId(userId);
             if (purposes.isEmpty()) {
@@ -75,16 +69,6 @@ public class UserScoreService {
             log.error("Error accessing the database", e);
             throw new RuntimeException("Database error occurred.", e);
         }
-    }
-    public UserModel getUserByUserScoreId(long userScoreId){
-        UserScoreModel userScore = userScoreRepository.findById(String.valueOf(userScoreId))
-                .orElseThrow(() -> new UserScoreNotFoundException(userScoreId));
-
-        if (userScore.getUserModel() == null) {
-            throw new UserNotFoundException(userScoreId);
-        }
-
-        return userScore.getUserModel();
     }
 
 }
