@@ -1,7 +1,5 @@
 package usyd.mbse.group37.service;
 
-import com.google.cloud.language.v1.AnalyzeSentimentResponse;
-import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,23 +64,24 @@ public class UserScoreService {
         return sentimentScore;
     }
 
-    public void generatePurposeBasedQuestionFromAI(Long userScoreId) {
-    long userId = this.getUserByUserScoreId(userScoreId).getUserId();
+    public String[] generatePurposeBasedQuestionFromAI(Long userScoreId) {
+        long userId = this.getUserByUserScoreId(userScoreId).getUserId();
 
-    try {
-        List<PurposeModel> purposes = purposeRepository.findAllByUserId(userId);
-        if (purposes.isEmpty()) {
-            throw new NoPurposeFoundException("No purpose found for user with ID: " + userId);
+        try {
+            List<PurposeModel> purposes = purposeRepository.findAllByUserId(userId);
+            if (purposes.isEmpty()) {
+                throw new NoPurposeFoundException("No purpose found for user with ID: " + userId);
+            }
+            String allPurposes = purposes.stream()
+                    .map(PurposeModel::getPurpose)
+                    .collect(Collectors.joining(", "));
+
+            return openAIService.generateQuestionsForPurpose(allPurposes);
+        } catch (DataAccessException e) {
+            log.error("Error accessing the database", e);
+            throw new RuntimeException("Database error occurred.", e);
         }
-        String allPurposes = purposes.stream()
-                .map(PurposeModel::getPurpose)
-                .collect(Collectors.joining(", "));
-        openAIService.generateQuestionsForPurpose(allPurposes);
-    } catch (DataAccessException e) {
-        log.error("Error accessing the database", e);
-        throw new RuntimeException("Database error occurred.", e);
     }
-}
     public UserModel getUserByUserScoreId(long userScoreId){
         UserScoreModel userScore = userScoreRepository.findById(String.valueOf(userScoreId))
                 .orElseThrow(() -> new UserScoreNotFoundException(userScoreId));
