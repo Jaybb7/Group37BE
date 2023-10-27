@@ -23,8 +23,8 @@ public class OpenAIController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/askChatGPT")
-    public ResponseEntity<?> contactOpenAI(@RequestParam String purpose){
+    @GetMapping("/generateQuestions")
+    public ResponseEntity<?> generateQuestions(@RequestParam String purpose){
         return new ResponseEntity<>(Map.of("data", openAIService.generateQuestionsForPurpose(purpose)), HttpStatus.OK);
     }
 
