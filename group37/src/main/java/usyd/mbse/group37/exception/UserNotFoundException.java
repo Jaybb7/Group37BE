@@ -4,4 +4,7 @@ public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String message) {
         super(message);
     }
+    public UserNotFoundException(Long scoreId) {
+        super("No User associated with UserScore id: " + scoreId);
+    }
 }

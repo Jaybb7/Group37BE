@@ -1,5 +1,8 @@
 package usyd.mbse.group37.service.GCP;
 
+import com.google.cloud.language.v1.AnalyzeSentimentResponse;
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import usyd.mbse.group37.service.GCP.model.GCPResponse;
@@ -36,5 +39,14 @@ public class GCPService {
         }
         return (GCPResponse) response.getBody();
     }
+    public float analyzeSentiment(String text) throws Exception {
+        try (LanguageServiceClient languageService = LanguageServiceClient.create()) {
+            Document doc = Document.newBuilder().setContent(text).setType(Document.Type.PLAIN_TEXT).build();
+            AnalyzeSentimentResponse response = languageService.analyzeSentiment(doc);
 
+            return response.getDocumentSentiment().getScore();
+        } catch (Exception e) {
+            throw new Exception("Error during sentiment analysis.", e);
+        }
+    }
 }

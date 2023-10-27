@@ -28,7 +28,7 @@ public class UserProfileController {
     public String uploadProfilePhoto(@RequestParam("file") MultipartFile file, @PathVariable("userId") Long userId) throws IOException {
         try {
             userprofileService.setProfilePhoto(userId, file.getBytes());
-            return "redirect:../profile";
+            return "redirect:/userprofile";
         } catch (UserNotFoundException e) {
             return "errorPage";
         }
@@ -38,7 +38,7 @@ public class UserProfileController {
     public String uploadStatusPhoto(@RequestParam("file") MultipartFile file, @PathVariable("userId") Long userId) throws IOException {
         try {
             userprofileService.setStatusPhoto(userId, file.getBytes());
-            return "redirect:../userprofile";
+            return "redirect:/userprofile";
         } catch (UserNotFoundException e) {
             return "errorPage";
         }
