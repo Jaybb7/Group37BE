@@ -18,6 +18,8 @@ public class AvatarGenerationController {
       this.stableHordeService = stableHordeService;
    }
 
+
+   //input parameter is a webp image encoded in base64. output is a url where the image is stored online temporarily
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("/generate")
     public String generateAvatar(@RequestParam String image) {
