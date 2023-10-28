@@ -37,7 +37,23 @@ public class OpenAIController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/mockInterview")
     public ResponseEntity<?> mockInterview(@RequestParam String question){
-        return new ResponseEntity<>(Map.of("data", openAIService.mockInterview(question)), HttpStatus.OK);
+        try{
+            Object answer = openAIService.mockInterview(question);
+            return new ResponseEntity<>(Map.of("data", answer), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/chat")
+    public ResponseEntity<?> askLLM(@RequestParam String question){
+        try{
+            Object answer = openAIService.mockInterview(question);
+            return new ResponseEntity<>(Map.of("data", answer), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

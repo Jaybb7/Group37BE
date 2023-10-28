@@ -2,15 +2,21 @@ package usyd.mbse.group37.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import usyd.mbse.group37.service.GCP.GCPService;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 
 @Slf4j
 @Service
 public class OpenAIService {
+
+    private final GCPService gcpService;
+
+    public OpenAIService(GCPService gcpService) {
+        this.gcpService = gcpService;
+    }
 
     public static String chatGPT(String prompt) {
         String url = "https://api.openai.com/v1/chat/completions";
@@ -61,7 +67,10 @@ public class OpenAIService {
         return chatGPT(input).split("\\\\n");
     }
 
-    public Object mockInterview(String question) {
-        return chatGPT(question).split("\\\\n");
+    public Object mockInterview(String question) throws Exception {
+        if(gcpService.requestGCP(question).getDocumentSentiment().getScore()<0.025){
+            throw new Exception("Please reframe your question.");
+        }
+        return chatGPT(question);
     }
 }
