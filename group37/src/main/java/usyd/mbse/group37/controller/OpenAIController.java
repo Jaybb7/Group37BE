@@ -23,9 +23,37 @@ public class OpenAIController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/askChatGPT")
-    public ResponseEntity<?> contactOpenAI(@RequestParam String purpose){
+    @GetMapping("/generateQuestions")
+    public ResponseEntity<?> generateQuestions(@RequestParam String purpose){
         return new ResponseEntity<>(Map.of("data", openAIService.generateQuestionsForPurpose(purpose)), HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/generateDocument")
+    public ResponseEntity<?> generateDocumentSample(@RequestParam String information){
+        return new ResponseEntity<>(Map.of("data", openAIService.generateDocumentSample(information)), HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/mockInterview")
+    public ResponseEntity<?> mockInterview(@RequestParam String question){
+        try{
+            Object answer = openAIService.mockInterview(question);
+            return new ResponseEntity<>(Map.of("data", answer), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/chat")
+    public ResponseEntity<?> askLLM(@RequestParam String question){
+        try{
+            Object answer = openAIService.mockInterview(question);
+            return new ResponseEntity<>(Map.of("data", answer), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

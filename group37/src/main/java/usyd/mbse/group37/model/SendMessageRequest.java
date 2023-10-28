@@ -7,8 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class SendMessageRequest {
 
-    private Long fromUser;
-    private Long toUser;
-    private String messageContent;
+    private String from;
+    private String to;
+    private String message;
 }
 

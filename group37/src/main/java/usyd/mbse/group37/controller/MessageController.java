@@ -21,18 +21,22 @@ public class MessageController {
     }
 
     @GetMapping("/get-messages")
-    public ResponseEntity<?> getMessages(@RequestParam Long userId) {
+    public ResponseEntity<?> getMessages(@RequestParam String username) {
         return new ResponseEntity<>(
-                Map.of("data", messageService.getMessages(userId)),
+                Map.of("data", messageService.getMessages(username)),
                 HttpStatus.OK);
 
     }
 
     @PostMapping("/send-message")
     public ResponseEntity<?> sendMessage(@RequestBody SendMessageRequest request) throws Exception {
-        messageService.sendMessage(request.getFromUser(),
-                request.getToUser(),
-                request.getMessageContent());
-        return new ResponseEntity<>(Map.of("data", "Message sent successfully."), HttpStatus.OK);
+        try{
+            messageService.sendMessage(request.getFrom(),
+                    request.getTo(),
+                    request.getMessage());
+            return new ResponseEntity<>(Map.of("data", "Message sent successfully."), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
     }
 }

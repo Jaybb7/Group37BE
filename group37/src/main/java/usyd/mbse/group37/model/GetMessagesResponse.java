@@ -7,8 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class GetMessagesResponse {
 
-    private Long messageId;
-    private Long userId;
+    private String user;
     private String message;
     private String timeStamp;
 }

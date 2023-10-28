@@ -2,19 +2,25 @@ package usyd.mbse.group37.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import usyd.mbse.group37.service.GCP.GCPService;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 
 @Slf4j
 @Service
 public class OpenAIService {
 
+    private final GCPService gcpService;
+
+    public OpenAIService(GCPService gcpService) {
+        this.gcpService = gcpService;
+    }
+
     public static String chatGPT(String prompt) {
         String url = "https://api.openai.com/v1/chat/completions";
-        String apiKey = "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";
+        String apiKey = System.getenv("OPENAI_API_KEY");
         String model = "gpt-3.5-turbo";
         try {
             URL obj = new URL(url);
@@ -52,8 +58,19 @@ public class OpenAIService {
                 +
                 "that prompt user with a scenario  to assess the "+ purpose +" personality of the person. "
                 +
-                "The response will be purely textual. . No explanation is needed.";;
+                "The response will be purely textual. . No explanation is needed.";
         return chatGPT(input).split("\\\\n");
     }
 
+    public Object generateDocumentSample(String information) {
+        String input = "create a resume template for me inside the tag <TEMPLATE> with my information as " + information;
+        return chatGPT(input).split("\\\\n");
+    }
+
+    public Object mockInterview(String question) throws Exception {
+        if(gcpService.requestGCP(question).getDocumentSentiment().getScore()<0.025){
+            throw new Exception("Please reframe your question.");
+        }
+        return chatGPT(question);
+    }
 }

@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 @Service
 public class GCPService {
 
-    private static final String API_KEY = "AIzaSyDKEU8OcpQxrU6e6SlC87P0PY1TP3zGdjY";
+    private static final String API_KEY = System.getenv("GCP_API_KEY");
     private static final String API_ENDPOINT =
             "https://language.googleapis.com/v2/documents:analyzeSentiment" + "?key=" + API_KEY;
     private static final String ENCODING_TYPE = "UTF8";
@@ -24,7 +24,7 @@ public class GCPService {
             "\"encodingType\":\"%s\"}";
 
 
-    public Object requestGCP(String payload) throws Exception {
+    public GCPResponse requestGCP(String payload) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         String requestBody = String.format(
                 GCP_REQUEST_JSON_BODY, payload, ENCODING_TYPE);
@@ -37,7 +37,7 @@ public class GCPService {
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new Exception("Unable to request external api: GCP sentiment analysis");
         }
-        return response.getBody();
+        return (GCPResponse) response.getBody();
     }
     public float analyzeSentiment(String text) throws Exception {
         try (LanguageServiceClient languageService = LanguageServiceClient.create()) {
