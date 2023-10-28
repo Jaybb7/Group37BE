@@ -29,7 +29,6 @@ public class PostService {
     public PostModel createPost(String postTitle, String postBenefits, String postSalary, Long userId, String postLocation, String postPointOfContact, String desc, String requirements) {
         UserModel user = userRepository.findById(String.valueOf(userId)).orElseThrow(() -> new RuntimeException("User not found"));
         PostModel postModel = new PostModel();
-
         postModel.setPostTitle(postTitle);
         postModel.setPostBenefits(postBenefits);
         postModel.setUser(user);
@@ -38,8 +37,6 @@ public class PostService {
         postModel.setPostRequirements(requirements);
         postModel.setPostPointOfContact(postPointOfContact);
         postModel.setPostSalary(postSalary);
-
-
         postRepository.save(postModel);
 
         return postModel;

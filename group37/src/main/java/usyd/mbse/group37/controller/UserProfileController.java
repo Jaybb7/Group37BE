@@ -64,5 +64,36 @@ public class UserProfileController {
             return new ResponseEntity<>(Map.of("error", "Something went wrong, please try again in a few minutes"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PostMapping("/updateUserProfile/{userId}")
+    public ResponseEntity<?> updateUserAndUploadProfilePhoto(
+            @PathVariable Long userId,
+            @RequestParam(required = false) String address,
+            @RequestParam(required = false) String linkedInLink,
+            @RequestParam(required = false) String bio,
+            @RequestParam(required = false) String twitterLink,
+            @RequestParam(required = false) String instagramLink,
+            @RequestParam(required = false) String birthDate,
+            @RequestParam(required = false) String currentPurpose
 
+    ) {
+        try {
+            UserProfileModel userProfileToUpdate = new UserProfileModel();
+            // Set the fields if they are provided
+            if (address != null && !address.isEmpty()) userProfileToUpdate.setAddress(address);
+            if (linkedInLink != null && !linkedInLink.isEmpty()) userProfileToUpdate.setLinkedInLink(linkedInLink);
+            if (bio != null && !bio.isEmpty()) userProfileToUpdate.setBio(bio);
+            if (twitterLink != null && !twitterLink.isEmpty()) userProfileToUpdate.setTwitterLink(twitterLink);
+            if (instagramLink != null && !instagramLink.isEmpty()) userProfileToUpdate.setInstagramLink(instagramLink);
+            if (birthDate != null && !birthDate.isEmpty()) userProfileToUpdate.setBirthDate(birthDate);  // Consider parsing if not a String
+            if (currentPurpose != null && !currentPurpose.isEmpty()) userProfileToUpdate.setCurrentPurpose(currentPurpose);
+            // Call the service method to update the user profile
+            userprofileService.updateUserProfile(userId, userProfileToUpdate);
+
+            return new ResponseEntity<>(Map.of("message", "User profile updated successfully."), HttpStatus.OK);
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>(Map.of("error", "User not found"), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("error", "Something went wrong, please try again later"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
