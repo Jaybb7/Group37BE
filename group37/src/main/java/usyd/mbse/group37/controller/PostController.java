@@ -36,12 +36,12 @@ public class PostController {
         return new ResponseEntity<>(Map.of("data", "Post created successfully."), HttpStatus.CREATED);
     }
 
-    @GetMapping("/getPost")
+    @GetMapping("/getPosts")
     public ResponseEntity<?> getAllPosts() {
         List<PostModel> posts = postService.getAllPosts();
         return new ResponseEntity<>(Map.of("data", posts), HttpStatus.OK);
     }
-    @GetMapping("/getPost/{postId}")
+    @GetMapping("/getPost")
     public ResponseEntity<?> getPostById(@RequestParam int postId) {
         PostModel post = postService.getPostById(postId);
 
