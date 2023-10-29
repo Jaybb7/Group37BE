@@ -12,7 +12,12 @@ import lombok.NoArgsConstructor;
 })
 @NoArgsConstructor
 public class UserModel {
+<<<<<<< HEAD
     @Id
+=======
+
+
+>>>>>>> jyon
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -20,6 +25,7 @@ public class UserModel {
     @Column(name = "user_name")
     private String userName;
 
+    @Id
     @Column(name = "email_address")
     private String emailAddress;
 
