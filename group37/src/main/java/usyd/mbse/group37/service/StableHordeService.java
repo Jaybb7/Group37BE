@@ -21,16 +21,15 @@ public class StableHordeService {
     public static String requestImage(String prompt) {
         String url = "https://aihorde.net/api/v2/generate/async";
         String base64Image = prompt;
-
         try {
             URL obj = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("apikey", "0000000000");
+            connection.setRequestProperty("apikey", "8DyBH_Ht56jK-VDAuhZJRg");
             connection.setRequestProperty("Client-Agent", "unknown:0:unknown");
             connection.setRequestProperty("Content-Type", "application/json");
             
-            String body = "{\"prompt\": \"Bright Cartoon portrait, trending on artstation, happy, masterpiece, bright, detailed portrait, symmetric, disney, kids cartoon, cartoon network, lego, emoji, digital painting###disfigured, ugly, bad anatomy, cubism, artifacts, jpeg artifacts, jagged, dark, photo\", \"params\": { \"sampler_name\": \"k_euler_a\", \"cfg_scale\": 7.5, \"denoising_strength\": 0.75, \"height\": 512, \"width\": 512, \"karras\": false, \"clip_skip\": 1, \"image_is_control\": false, \"return_control_map\": false, \"steps\": 25, \"n\": 1 }, \"nsfw\": false, \"trusted_workers\": false, \"slow_workers\": true, \"censor_nsfw\": false, \"worker_blacklist\": false, \"models\": [\"stable_diffusion\"], \"source_image\": \"" 
+            String body = "{\"prompt\": \"Bright Cartoon portrait, trending on artstation, happy, masterpiece, bright, detailed portrait, symmetric, disney, kids cartoon, cartoon network, lego, emoji, digital painting###disfigured, ugly, bad anatomy, cubism, artifacts, jpeg artifacts, jagged, dark, photo\", \"params\": { \"sampler_name\": \"k_euler_a\", \"cfg_scale\": 7.5, \"denoising_strength\": 0.55, \"height\": 512, \"width\": 512, \"karras\": false, \"clip_skip\": 1, \"image_is_control\": false, \"return_control_map\": false, \"steps\": 25, \"n\": 1 }, \"nsfw\": false, \"trusted_workers\": false, \"slow_workers\": true, \"censor_nsfw\": false, \"worker_blacklist\": false, \"models\": [\"stable_diffusion\"], \"source_image\": \"" 
             + base64Image
             + "\", \"source_processing\": \"img2img\", \"r2\": true, \"dry_run\": false}";
             connection.setDoOutput(true);
@@ -57,7 +56,6 @@ public class StableHordeService {
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Client-Agent", "unknown:0:unknown");
             connection.setRequestProperty("accept", "application/json");
-            
             InputStream inputStream = (InputStream) connection.getContent();
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
             String line = br.readLine();
@@ -81,8 +79,9 @@ public class StableHordeService {
             InputStream inputStream = (InputStream) connection.getContent();
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
             String line = br.readLine();
+            line = line.substring(line.indexOf("\"https")+1, line.indexOf("seed"));
+            line = line.substring(0, line.indexOf("\""));
             System.out.println(line);
-            line = line.substring(line.indexOf("\"https")+1, line.indexOf("seed")-4);
             return line;
         } catch (Exception e) {
             throw new RuntimeException(e);
