@@ -89,4 +89,8 @@ public class UserprofileService {
             throw new UserNotFoundException("User not found");
         }
     }
+    public long getUserProfileId(Long userId){
+        return userProfileRepository.findByUserProfileId(userId).get().getUserProfileId();
+    }
+
 }

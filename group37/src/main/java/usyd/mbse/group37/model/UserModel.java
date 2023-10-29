@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "User", indexes = {
         @Index(name = "index_email_address", columnList = "email_address"),
-        @Index(name = "index_user_id", columnList = "user_id")  // 添加这一行
+        @Index(name = "index_user_id", columnList = "user_id")
 })
 @NoArgsConstructor
 public class UserModel {
 
-    @Id
+
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -21,6 +21,7 @@ public class UserModel {
     @Column(name = "user_name")
     private String userName;
 
+    @Id
     @Column(name = "email_address")
     private String emailAddress;
 
